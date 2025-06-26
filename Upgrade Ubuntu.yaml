@@ -1,18 +1,12 @@
 ---
-# Ansible Playbook to update and upgrade packages on a host
-# This playbook performs `sudo apt update` and `sudo apt upgrade` on the specified host.
-
 - name: Update and upgrade packages on dockerhost
-  hosts: dockerhost
-  become: yes  # Ensures the tasks are run with sudo privileges
-  vars:
-    ansible_host: 192.168.1.101  # IP address of the target host
-
+  hosts: all
+  become: true
   tasks:
-    - name: Update the apt package index
-      apt:
+    - name: Update apt cache
+      ansible.builtin.apt:
         update_cache: yes
 
-    - name: Upgrade all packages to the latest version
-      apt:
+    - name: Upgrade packages
+      ansible.builtin.apt:
         upgrade: dist
