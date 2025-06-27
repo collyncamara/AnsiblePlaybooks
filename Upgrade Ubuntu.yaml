@@ -1,6 +1,6 @@
 ---
 - name: Update and upgrade packages on dockerhost
-  hosts: dockerhost
+  hosts: all
   become: yes
   become_method: sudo
   tasks:
