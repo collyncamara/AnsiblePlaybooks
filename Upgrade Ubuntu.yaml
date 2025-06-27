@@ -1,10 +1,11 @@
 ---
 - name: Update and upgrade packages on dockerhost
-  hosts: all
-  become: true
+  hosts: dockerhost
+  become: yes
+  become_method: sudo
   tasks:
     - name: Update apt cache
-      ansible.builtin.apt:
+      apt:
         update_cache: yes
 
     - name: Upgrade packages
