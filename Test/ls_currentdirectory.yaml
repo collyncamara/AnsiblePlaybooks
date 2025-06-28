@@ -1,0 +1,13 @@
+---
+- name: List current directory contents on all hosts
+  hosts: all
+  gather_facts: no
+
+  tasks:
+    - name: Run 'ls' in the current directory
+      command: ls
+      register: ls_output
+
+    - name: Print the output of 'ls'
+      debug:
+        var: ls_output.stdout_lines
