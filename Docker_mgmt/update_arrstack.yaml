@@ -1,12 +1,12 @@
 ---
 - name: List current directory contents on all hosts
   hosts: all
-  become: yes
+  become: true
   gather_facts: no
   
   tasks:
     - name: Pull docker images with docker-compose
-      become: yes
+      become: true
       ansible.builtin.command:
         cmd: docker compose pull
         chdir: /home/dockerhost/docker_data/arr_stack
