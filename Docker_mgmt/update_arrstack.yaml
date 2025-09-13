@@ -1,6 +1,6 @@
 ---
 - name: Navigate to arr_stack directory and list contents
-  shell: |
+  command: |
     cd /home/dockerhost/docker_data/arr_stack
     ls
     pwd
