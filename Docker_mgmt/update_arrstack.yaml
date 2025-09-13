@@ -4,14 +4,27 @@
   gather_facts: no
   
   tasks:
-    - name: Navigate to arr_stack directory and list contents
-      shell: |
-        cd /home/dockerhost/docker_data/arr_stack
-        sudo docker compose pull
-        sudo docker compose up -d
-      register: shell_output
+    - name: Pull latest images with Docker Compose
+      become: yes
+      become_method: sudo
+      ansible.builtin.command:
+        cmd: docker compose pull
+        chdir: /home/dockerhost/docker_data/arr_stack
+      register: pull_output
 
-    - name: Print the output of the shell command
+    - name: Start containers with Docker Compose
+      become: yes
+      become_method: sudo
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: /home/dockerhost/docker_data/arr_stack
+      register: up_output
+
+    - name: Print the output of the pull command
       debug:
-        var: shell_output.stdout_lines
+        var: pull_output.stdout_lines
+
+    - name: Print the output of the up command
+      debug:
+        var: up_output.stdout_lines
 
