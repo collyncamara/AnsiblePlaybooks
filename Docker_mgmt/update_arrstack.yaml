@@ -3,10 +3,9 @@
   hosts: all
   become: true
   gather_facts: no
-  
+
   tasks:
     - name: Pull docker images with docker-compose
-      become: true
       ansible.builtin.command:
         cmd: docker compose pull
         chdir: /home/dockerhost/docker_data/arr_stack
@@ -16,3 +15,12 @@
       ansible.builtin.debug:
         var: compose_pull.stdout_lines
 
+    - name: Restart all containers in the stack
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: /home/dockerhost/docker_data/arr_stack
+      register: compose_up
+
+    - name: Show restart output
+      ansible.builtin.debug:
+        var: compose_up.stdout_lines
