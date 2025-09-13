@@ -5,9 +5,13 @@
   
   tasks:
     - name: Navigate to arr_stack directory and list contents
-      command: |
+      shell: |
         cd /home/dockerhost/docker_data/arr_stack
         ls
         pwd
       register: shell_output
+
+    - name: Print the output of the shell command
+      debug:
+        var: shell_output.stdout_lines
 
