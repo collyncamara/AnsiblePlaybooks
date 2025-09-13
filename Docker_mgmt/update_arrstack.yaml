@@ -1,8 +1,13 @@
 ---
-- name: Navigate to arr_stack directory and list contents
-  command: |
-    cd /home/dockerhost/docker_data/arr_stack
-    ls
-    pwd
-  register: shell_output
+- name: List current directory contents on all hosts
+  hosts: all
+  gather_facts: no
+  
+  tasks:
+    - name: Navigate to arr_stack directory and list contents
+      shell: |
+        cd /home/dockerhost/docker_data/arr_stack
+        ls
+        pwd
+      register: shell_output
 
