@@ -8,7 +8,7 @@
     - name: Pull docker images with docker-compose
       become: yes
       ansible.builtin.command:
-        cmd: whoami
+        cmd: sudo whoami
         chdir: /home/dockerhost/docker_data/arr_stack
       register: compose_pull
 
