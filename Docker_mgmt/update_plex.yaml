@@ -1,0 +1,26 @@
+---
+- name: List current directory contents on all hosts
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Pull docker images with docker-compose
+      ansible.builtin.command:
+        cmd: docker compose pull
+        chdir: /home/dockerhost/docker_data/scripts/Plex-AutoSetup
+      register: compose_pull
+
+    - name: Show output
+      ansible.builtin.debug:
+        var: compose_pull.stdout_lines
+
+    - name: Restart all containers in the stack
+      ansible.builtin.command:
+        cmd: docker compose up -d
+        chdir: /home/dockerhost/docker_data/scripts/Plex-AutoSetup
+      register: compose_up
+
+    - name: Show restart output
+      ansible.builtin.debug:
+        var: compose_up.stdout_lines
