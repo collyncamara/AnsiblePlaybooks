@@ -6,10 +6,10 @@
   
   tasks:
     - name: Pull docker images with docker-compose
-      ansible.builtin.command:
-        cmd: docker compose pull
-        chdir: /home/dockerhost/docker_data/arr_stack
       become: yes
+      ansible.builtin.command:
+        cmd: whoami
+        chdir: /home/dockerhost/docker_data/arr_stack
       register: compose_pull
 
     - name: Show output
