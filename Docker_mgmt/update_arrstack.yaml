@@ -1,32 +1,17 @@
 ---
 - name: List current directory contents on all hosts
   hosts: all
+  become: true
   gather_facts: no
   
   tasks:
-    - name: Pull latest images with Docker Compose
-      become: yes
-      become_method: sudo
-      become_user: dockerhost
+    - name: Pull docker images with docker-compose
       ansible.builtin.command:
-        cmd: docker compose pull
+        cmd: docker-compose pull
         chdir: /home/dockerhost/docker_data/arr_stack
-      register: pull_output
+      register: compose_pull
 
-    - name: Start containers with Docker Compose
-      become: yes
-      become_method: sudo
-      become_user: dockerhost
-      ansible.builtin.command:
-        cmd: docker compose up -d
-        chdir: /home/dockerhost/docker_data/arr_stack
-      register: up_output
-
-    - name: Print the output of the pull command
-      debug:
-        var: pull_output.stdout_lines
-
-    - name: Print the output of the up command
-      debug:
-        var: up_output.stdout_lines
+    - name: Show output
+      ansible.builtin.debug:
+        var: compose_pull.stdout_lines
 
